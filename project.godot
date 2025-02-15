@@ -1,0 +1,49 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Настройка расписания звонков"
+config/description="Программа настройки расписания для автоматической системы подачи звонков."
+config/version="1.0"
+run/main_scene="uid://c2mycsm4njkm"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="rings-configurator"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+run/low_processor_mode=true
+run/low_processor_mode_sleep_usec=10000
+boot_splash/show_image=false
+config/icon="res://theme/icon.svg"
+
+[audio]
+
+driver/driver="Dummy"
+
+[debug]
+
+file_logging/enable_file_logging.pc=false
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=768
+window/energy_saving/keep_screen_on=false
+window/subwindows/embed_subwindows=false
+window/per_pixel_transparency/allowed=true
+
+[gui]
+
+theme/custom="uid://drarjch6dhokd"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+shader_compiler/shader_cache/enabled=false

@@ -1,0 +1,417 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2mycsm4njkm"]
+
+[ext_resource type="Script" uid="uid://cynqpxm2ygawp" path="res://main/main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://uv2143gxt5gf" path="res://main/schedule_of_day.tscn" id="2_pjrb6"]
+[ext_resource type="PackedScene" uid="uid://b60rfpll2brlw" path="res://main/override.tscn" id="3_c651c"]
+[ext_resource type="PackedScene" uid="uid://dcke3m62muycp" path="res://schedule_editor/schedule_editor.tscn" id="3_xwkvk"]
+
+[sub_resource type="Gradient" id="Gradient_c651c"]
+offsets = PackedFloat32Array(0, 0.995261)
+colors = PackedColorArray(0, 0.132812, 1, 1, 0, 0.765625, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3wy1v"]
+gradient = SubResource("Gradient_c651c")
+fill_to = Vector2(1, 1)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")
+schedule_of_day_scene = ExtResource("2_pjrb6")
+override_scene = ExtResource("3_c651c")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_3wy1v")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Длительность звонка:"
+
+[node name="RingDuration" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 10.0
+step = 0.5
+value = 3.0
+suffix = "сек"
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_type_variation = &"HeaderLarge"
+text = "Настройка расписания звонков"
+vertical_alignment = 1
+
+[node name="Save" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Сохранить"
+
+[node name="Load" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Загрузить"
+
+[node name="Author" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "от Summersay415"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Schedules" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Расписания дня"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SchedulesList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules/PanelContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Empty" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules/PanelContainer/ScrollContainer/MarginContainer/SchedulesList"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 0
+theme_type_variation = &"HeaderSmall"
+text = "Пустое расписание"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreateScheduleOfDay" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules/PanelContainer/ScrollContainer/MarginContainer/SchedulesList" groups=["AddSchedule"]]
+layout_mode = 2
+text = "Создать расписание дня..."
+
+[node name="DaysOfWeek" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Дни недели"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer"]
+layout_mode = 2
+
+[node name="DaysOfWeek" type="GridContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="MondayLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Понедельник"
+
+[node name="Monday" type="OptionButton" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TuesdayLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Вторник"
+
+[node name="Tuesday" type="OptionButton" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WednesdayLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Среда"
+
+[node name="Wednesday" type="OptionButton" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ThursdayLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Четверг"
+
+[node name="Thursday" type="OptionButton" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FridayLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Пятница"
+
+[node name="Friday" type="OptionButton" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SaturdayLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Суббота"
+
+[node name="Saturday" type="OptionButton" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SundayLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Воскресенье"
+
+[node name="Sunday" type="OptionButton" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DaysOfWeek/PanelContainer/MarginContainer/DaysOfWeek" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Overrides" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/Overrides"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Переопределения в конкретные даты"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/Overrides"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/Overrides/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/Overrides/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NoOverrides" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/Overrides/PanelContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Нет переопределений"
+
+[node name="OverridesList" type="GridContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/Overrides/PanelContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+
+[node name="AddOverride" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/Overrides"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Добавить переопределение..."
+
+[node name="ScheduleEditor" parent="." instance=ExtResource("3_xwkvk")]
+visible = false
+
+[node name="AddScheduleOfDay" type="ConfirmationDialog" parent="."]
+title = "Создать расписание дня..."
+position = Vector2i(0, 36)
+size = Vector2i(392, 88)
+unresizable = true
+ok_button_text = "Создать"
+dialog_hide_on_ok = false
+cancel_button_text = "Отмена"
+
+[node name="LineEdit" type="LineEdit" parent="AddScheduleOfDay"]
+custom_minimum_size = Vector2(240, 0)
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 384.0
+offset_bottom = 72.0
+placeholder_text = "Название расписания дня..."
+alignment = 1
+max_length = 24
+expand_to_text_length = true
+context_menu_enabled = false
+
+[node name="AddOverride" type="Window" parent="."]
+title = "Добавить переопределение..."
+size = Vector2i(480, 100)
+visible = false
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+
+[node name="MarginContainer" type="MarginContainer" parent="AddOverride"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddOverride/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AddOverride/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+alignment = 1
+
+[node name="Day" type="SpinBox" parent="AddOverride/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 31.0
+value = 1.0
+
+[node name="Month" type="OptionButton" parent="AddOverride/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 12
+popup/item_0/text = "Января"
+popup/item_0/id = 0
+popup/item_1/text = "Февраля"
+popup/item_1/id = 1
+popup/item_2/text = "Марта"
+popup/item_2/id = 2
+popup/item_3/text = "Апреля"
+popup/item_3/id = 3
+popup/item_4/text = "Мая"
+popup/item_4/id = 4
+popup/item_5/text = "Июня"
+popup/item_5/id = 5
+popup/item_6/text = "Июля"
+popup/item_6/id = 6
+popup/item_7/text = "Августа"
+popup/item_7/id = 7
+popup/item_8/text = "Сентября"
+popup/item_8/id = 8
+popup/item_9/text = "Октября"
+popup/item_9/id = 9
+popup/item_10/text = "Ноября"
+popup/item_10/id = 10
+popup/item_11/text = "Декабря"
+popup/item_11/id = 11
+
+[node name="ScheduleOverride" type="OptionButton" parent="AddOverride/MarginContainer/VBoxContainer/HBoxContainer" groups=["ScheduleMenu"]]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="AddOverride/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="AddOverride/MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Отмена"
+
+[node name="AddOverrideConfirm" type="Button" parent="AddOverride/MarginContainer/VBoxContainer/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Добавить"
+
+[node name="DeleteScheduleOfDay" type="ConfirmationDialog" parent="."]
+title = "Удалить расписание?"
+size = Vector2i(240, 100)
+unresizable = true
+ok_button_text = "Удалить"
+cancel_button_text = "Отмена"
+
+[node name="SaveSchedule" type="FileDialog" parent="."]
+title = "Сохранить расписание"
+ok_button_text = "Сохранить"
+cancel_button_text = "Отмена"
+mode_overrides_title = false
+access = 2
+filters = PackedStringArray("*.txt")
+use_native_dialog = true
+
+[node name="LoadSchedule" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Открыть расписание"
+ok_button_text = "Открыть"
+cancel_button_text = "Отмена"
+mode_overrides_title = false
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.txt")
+use_native_dialog = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Save" to="SaveSchedule" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Load" to="LoadSchedule" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/Schedules/PanelContainer/ScrollContainer/MarginContainer/SchedulesList/CreateScheduleOfDay" to="AddScheduleOfDay" method="popup_centered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Overrides/AddOverride" to="." method="_check_for_taken"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Overrides/AddOverride" to="AddOverride" method="popup_centered"]
+[connection signal="confirmed" from="AddScheduleOfDay" to="." method="_on_add_schedule_of_day_confirmed"]
+[connection signal="text_changed" from="AddScheduleOfDay/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="close_requested" from="AddOverride" to="AddOverride" method="hide"]
+[connection signal="value_changed" from="AddOverride/MarginContainer/VBoxContainer/HBoxContainer/Day" to="." method="_check_for_taken" unbinds=1]
+[connection signal="item_selected" from="AddOverride/MarginContainer/VBoxContainer/HBoxContainer/Month" to="." method="_on_month_item_selected"]
+[connection signal="pressed" from="AddOverride/MarginContainer/VBoxContainer/Buttons/Cancel" to="AddOverride" method="hide"]
+[connection signal="pressed" from="AddOverride/MarginContainer/VBoxContainer/Buttons/AddOverrideConfirm" to="." method="_on_add_override_pressed"]
+[connection signal="confirmed" from="DeleteScheduleOfDay" to="." method="_on_delete_schedule_of_day_confirmed"]
+[connection signal="file_selected" from="SaveSchedule" to="." method="save_to_file"]
+[connection signal="file_selected" from="LoadSchedule" to="." method="_on_load_schedule_file_selected"]

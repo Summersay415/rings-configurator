@@ -1,0 +1,149 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcke3m62muycp"]
+
+[ext_resource type="Script" uid="uid://b1u5weev2uv3w" path="res://schedule_editor/schedule_editor.gd" id="1_mi1l3"]
+[ext_resource type="PackedScene" uid="uid://bvx104wt03dqi" path="res://schedule_editor/interval.tscn" id="2_jg7ie"]
+[ext_resource type="PackedScene" uid="uid://cxgaf6eg5i0r6" path="res://schedule_editor/ring.tscn" id="3_nemo0"]
+
+[sub_resource type="Gradient" id="Gradient_c651c"]
+offsets = PackedFloat32Array(0, 0.995261)
+colors = PackedColorArray(0, 0.132812, 1, 1, 0, 0.765625, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mi1l3"]
+gradient = SubResource("Gradient_c651c")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 1)
+
+[node name="ScheduleEditor" type="Window"]
+title = "Редактирование расписания"
+position = Vector2i(0, 36)
+size = Vector2i(680, 720)
+wrap_controls = true
+transient = true
+exclusive = true
+min_size = Vector2i(680, 540)
+script = ExtResource("1_mi1l3")
+interval_scene = ExtResource("2_jg7ie")
+ring_scene = ExtResource("3_nemo0")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_mi1l3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Имена промежутков могут быть только на английском!"
+horizontal_alignment = 1
+
+[node name="Rename" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Rename"]
+layout_mode = 2
+text = "Имя расписания:"
+
+[node name="RenameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/Rename"]
+unique_name_in_owner = true
+layout_mode = 2
+max_length = 24
+expand_to_text_length = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+
+[node name="Start" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/Start"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Start"]
+layout_mode = 2
+text = "От 00:00"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/Start"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RingsAndIntervalsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="End" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/End"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/End"]
+layout_mode = 2
+text = "До 24:00"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/End"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddRing" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Добавить звонок..."
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Время урока:"
+
+[node name="LessonTime" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+max_value = 180.0
+value = 40.0
+suffix = "мин"
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Уроков в смене:"
+
+[node name="LessonsInShift" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 10.0
+value = 7.0
+
+[connection signal="close_requested" from="." to="." method="hide"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/Rename/RenameEdit" to="." method="_on_rename_edit_text_submitted"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/AddRing" to="." method="_on_add_ring_pressed"]

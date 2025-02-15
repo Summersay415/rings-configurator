@@ -1,0 +1,10 @@
+[gd_resource type="Theme" format=3 uid="uid://drarjch6dhokd"]
+
+[resource]
+Button/constants/icon_max_width = 32
+GridContainer/constants/h_separation = 8
+GridContainer/constants/v_separation = 8
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8

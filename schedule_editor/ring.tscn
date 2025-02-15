@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxgaf6eg5i0r6"]
+
+[ext_resource type="Texture2D" uid="uid://c0yk58ejbf3jj" path="res://theme/delete.png" id="1_2du1v"]
+
+[node name="Ring" type="HBoxContainer"]
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Звонок. Время:"
+
+[node name="Hours" type="SpinBox" parent="."]
+layout_mode = 2
+suffix = "ч"
+
+[node name="Mins" type="SpinBox" parent="."]
+layout_mode = 2
+suffix = "мин"
+
+[node name="Delete" type="Button" parent="."]
+layout_mode = 2
+icon = ExtResource("1_2du1v")
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3

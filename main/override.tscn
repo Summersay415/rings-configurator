@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://b60rfpll2brlw"]
+
+[ext_resource type="Texture2D" uid="uid://c0yk58ejbf3jj" path="res://theme/delete.png" id="2_uu4vx"]
+
+[node name="Override" type="HBoxContainer"]
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"HeaderSmall"
+horizontal_alignment = 1
+
+[node name="Delete" type="Button" parent="."]
+layout_mode = 2
+icon = ExtResource("2_uu4vx")

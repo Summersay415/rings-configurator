@@ -20,7 +20,7 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 run/low_processor_mode=true
 run/low_processor_mode_sleep_usec=10000
 boot_splash/show_image=false
-config/icon="res://theme/icon.svg"
+config/icon="uid://b68g2bly08van"
 
 [audio]
 

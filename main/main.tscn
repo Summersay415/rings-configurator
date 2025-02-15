@@ -382,7 +382,6 @@ cancel_button_text = "Отмена"
 
 [node name="SaveSchedule" type="FileDialog" parent="."]
 title = "Сохранить расписание"
-ok_button_text = "Сохранить"
 cancel_button_text = "Отмена"
 mode_overrides_title = false
 access = 2
@@ -392,7 +391,7 @@ use_native_dialog = true
 [node name="LoadSchedule" type="FileDialog" parent="."]
 auto_translate_mode = 1
 title = "Открыть расписание"
-ok_button_text = "Открыть"
+ok_button_text = "Open"
 cancel_button_text = "Отмена"
 mode_overrides_title = false
 file_mode = 0

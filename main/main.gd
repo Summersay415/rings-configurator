@@ -30,7 +30,7 @@ var _going_to_delete: int = -1
 
 func _ready() -> void:
 	get_window().min_size = Vector2i(840, 630)
-	($SaveSchedule as FileDialog).current_path = OS.get_executable_path().get_base_dir()
+	($SaveSchedule as FileDialog).current_file = "schedule.txt"
 	($AddScheduleOfDay as AcceptDialog).get_ok_button().disabled = true
 	($AddScheduleOfDay as AcceptDialog).register_text_enter(
 			$AddScheduleOfDay/LineEdit as LineEdit)
@@ -46,7 +46,7 @@ func _notification(what: int) -> void:
 			save_to_file()
 
 
-func save_to_file(path: String = "user://schedule.rings") -> void:
+func save_to_file(path: String = "user://schedule.txt") -> void:
 	var fa := FileAccess.open(path, FileAccess.WRITE)
 	if not fa:
 		push_error("Error saving to file at %s: %s." % [

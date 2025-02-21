@@ -165,7 +165,7 @@ func _on_delete_ring_pressed(idx: int) -> void:
 				(current_child.get_node(^"LineEdit") as LineEdit).text_changed.connect(
 						_on_interval_line_edit_text_changed.bind(curr_idx))
 	
-	for i: int in range(maxi(0, idx - 1), mini(idx + 1, _editing_schedule.rings.size() - 1)):
+	for i: int in range(maxi(0, idx - 1), mini(idx + 1, _editing_schedule.rings.size())):
 		_update_duration(i)
 		_update_limits(i)
 	

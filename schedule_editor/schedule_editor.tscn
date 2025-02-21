@@ -147,3 +147,5 @@ value = 7.0
 [connection signal="close_requested" from="." to="." method="hide"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/Rename/RenameEdit" to="." method="_on_rename_edit_text_submitted"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/AddRing" to="." method="_on_add_ring_pressed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/LessonTime" to="." method="_on_lesson_time_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/LessonsInShift" to="." method="_on_lessons_in_shift_value_changed"]

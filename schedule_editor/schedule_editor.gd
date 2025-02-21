@@ -18,6 +18,9 @@ func edit_schedule(schedule: ScheduleOfDay) -> void:
 		%RingsAndIntervalsList.remove_child(child)
 		child.queue_free()
 	
+	(%LessonTime as Range).value = _editing_schedule.lesson_time
+	(%LessonsInShift as Range).value = _editing_schedule.lessons_in_shift
+	
 	var first_interval: HBoxContainer = interval_scene.instantiate()
 	(first_interval.get_node(^"Duration") as CanvasItem).hide()
 	(first_interval.get_node(^"LineEdit") as LineEdit).text = _editing_schedule.interval_names[0]
@@ -176,11 +179,11 @@ func _on_delete_ring_pressed(idx: int) -> void:
 func _on_add_ring_pressed() -> void:
 	var new_idx: int = _editing_schedule.rings.size()
 	var new_time: int = mini(_editing_schedule.rings[-1][0] * 60 + _editing_schedule.rings[-1][1]
-			+ (int((%LessonTime as Range).value) if new_idx % 2 == 1 else 5), 1439)
+			+ (_editing_schedule.lesson_time if new_idx % 2 == 1 else 5), 1439)
 	var num_of_lesson: int = floori(new_idx / 2.0) + 1
-	var shift: int = 1 if num_of_lesson <= int((%LessonsInShift as Range).value) else 2
+	var shift: int = 1 if num_of_lesson <= _editing_schedule.lessons_in_shift else 2
 	if shift == 2:
-		num_of_lesson -= int((%LessonsInShift as Range).value)
+		num_of_lesson -= _editing_schedule.lessons_in_shift
 	var new_name: String = ("S%d: Lesson %d" if new_idx % 2 == 1 else "S%d: Break to L%d") % [
 		shift,
 		num_of_lesson,
@@ -213,3 +216,11 @@ func _on_rename_edit_text_submitted(new_text: String) -> void:
 	(get_parent().get_node(^"%SchedulesList").get_node(
 			str((get_parent() as Main).schedules_of_day.find_key(_editing_schedule))
 	).get_node(^"Name") as Label).text = new_text
+
+
+func _on_lesson_time_value_changed(value: float) -> void:
+	_editing_schedule.lesson_time = int(value)
+
+
+func _on_lessons_in_shift_value_changed(value: float) -> void:
+	_editing_schedule.lessons_in_shift = int(value)

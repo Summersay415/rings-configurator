@@ -55,13 +55,10 @@ func save_to_file(path: String = "user://schedule.txt") -> void:
 		])
 		return
 	# Заголовок
-	fa.store_line("{nums_of_schedules} {nums_of_overrides} {ring_duration_msec} \
-{lesson_mins} {lessons_in_shift}".format({
+	fa.store_line("{nums_of_schedules} {nums_of_overrides} {ring_duration_msec}".format({
 		nums_of_schedules = schedules_of_day.size(),
 		nums_of_overrides = overrides.size(),
 		ring_duration_msec = int((%RingDuration as Range).value * 1000),
-		lesson_mins = int(($ScheduleEditor/%LessonTime as Range).value),
-		lessons_in_shift = int(($ScheduleEditor/%LessonsInShift as Range).value),
 	}))
 	
 	var mapping: Dictionary[int, int] = {0: 0} # id: idx
@@ -83,7 +80,11 @@ func save_to_file(path: String = "user://schedule.txt") -> void:
 	# Расписания
 	for i: int in range(1, schedules_of_day.size() + 1):
 		var schedule: ScheduleOfDay = schedules_of_day[mapping.find_key(i)]
-		fa.store_line(str(schedule.rings.size()))
+		fa.store_line("{rings_count} {lessons_in_shift} {lesson_time}".format({
+			rings_count = schedule.rings.size(),
+			lessons_in_shift = schedule.lessons_in_shift,
+			lesson_time = schedule.lesson_time,
+		}))
 		fa.store_line(schedule.name)
 		var first := true
 		for time: Array in schedule.rings:
@@ -114,7 +115,7 @@ func load_from_file() -> void:
 		return
 	# Парсинг заголовка
 	var header: PackedStringArray = fa.get_line().split(' ')
-	if header.size() != 5:
+	if header.size() != 3:
 		push_error("Corrupted header.")
 		fa.close()
 		return
@@ -122,8 +123,6 @@ func load_from_file() -> void:
 	var nums_of_schedules := int(header[0])
 	var nums_of_overrides := int(header[1])
 	(%RingDuration as Range).value = int(header[2]) / 1000.0
-	($ScheduleEditor/%LessonTime as Range).value = int(header[3])
-	($ScheduleEditor/%LessonsInShift as Range).value = int(header[4])
 	
 	var mapping: Dictionary[int, int] = {0: 0} # id: idx
 	for i: int in range(1, nums_of_schedules + 1):
@@ -133,7 +132,10 @@ func load_from_file() -> void:
 		var schedule := ScheduleOfDay.new()
 		schedule.interval_names.clear()
 		schedule.rings.clear()
-		var rings := int(fa.get_line())
+		var schedule_header: PackedStringArray = fa.get_line().split(' ')
+		var rings: int = int(schedule_header[0])
+		schedule.lessons_in_shift = int(schedule_header[1])
+		schedule.lesson_time = int(schedule_header[2])
 		schedule.name = fa.get_line()
 		var rings_times: PackedStringArray = fa.get_line().split(' ')
 		for j: int in rings:
